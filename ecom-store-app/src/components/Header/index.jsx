@@ -8,6 +8,7 @@ function Header() {
         <p>Logo</p>
       </div>
       <div className="App-header-nav">
+        <p>Shop</p>
         <p>Contact</p>
         <CartIcon />
       </div>
