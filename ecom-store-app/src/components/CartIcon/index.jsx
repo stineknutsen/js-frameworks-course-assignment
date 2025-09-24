@@ -1,5 +1,6 @@
 import { FaShoppingCart } from "react-icons/fa";
 import styled from "styled-components";
+import { useCart } from "../../context/CartContext";
 
 const Overlay = styled.div`
   position: absolute;
@@ -13,15 +14,14 @@ const Overlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 12px;
 `;
-function CartIcon() {
+export default function CartIcon() {
+  const { cart } = useCart();
   return (
     <div>
       <FaShoppingCart />
-      <Overlay />
-      {/* Display the number of items in cart */}
+      <Overlay>{cart.length}</Overlay>
     </div>
   );
 }
-
-export default CartIcon;

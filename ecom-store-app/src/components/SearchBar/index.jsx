@@ -1,4 +1,3 @@
-// src/components/SearchBar/index.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";

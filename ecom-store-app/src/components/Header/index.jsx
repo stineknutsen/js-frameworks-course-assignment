@@ -37,7 +37,7 @@ export default function Header() {
   return (
     <HeaderDiv>
       <Link to="/">
-        <Logo src="./logo.png" alt="logo" />
+        <Logo src="logo.png" alt="logo" />
       </Link>
 
       <Nav>
