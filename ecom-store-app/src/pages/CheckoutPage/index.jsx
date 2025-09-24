@@ -3,18 +3,18 @@ import CartItem from "../../components/CartItem";
 
 export default function CartPage() {
   const { cart } = useCart();
-  const total = cart.reduce((sum, item) => sum + item.price, 0);
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
     <div>
-      <h2>Your Cart</h2>
+      <h1>Your Cart</h1>
 
       {cart.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
         <>
-          {cart.map((item, i) => (
-            <CartItem key={i} product={item} />
+          {cart.map((item) => (
+            <CartItem key={item.id} product={item} />
           ))}
           <h3>Total: ${total.toFixed(2)}</h3>
           <button>Checkout</button>

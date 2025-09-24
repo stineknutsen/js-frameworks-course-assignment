@@ -4,9 +4,9 @@ import { useCart } from "../../context/CartContext";
 
 const Overlay = styled.div`
   position: absolute;
-  top: 0;
-  right: 0;
-  background-color: red;
+  top: 4px;
+  right: 2px;
+  background: red;
   color: white;
   border-radius: 50%;
   width: 20px;
@@ -18,10 +18,11 @@ const Overlay = styled.div`
 `;
 export default function CartIcon() {
   const { cart } = useCart();
+  const total = cart.reduce((sum, item) => sum + item.quantity, 0);
   return (
     <div>
       <FaShoppingCart />
-      <Overlay>{cart.length}</Overlay>
+      <Overlay>{total}</Overlay>
     </div>
   );
 }
