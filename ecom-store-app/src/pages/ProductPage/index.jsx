@@ -20,7 +20,9 @@ export default function ProductPage() {
       setProduct(data);
     });
   }, [id]);
-
+  if (!product.id) {
+    return <p>Loading...</p>;
+  }
   return (
     <Display>
       <img src={product.image.url} alt={product.image.alt} />

@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { getAllProducts } from "../../api/getAllProducts.js";
 import ProductCard from "../../components/ProductCard";
 import styled from "styled-components";
+import SearchBar from "../../components/SearchBar/index.jsx";
 
 const Grid = styled.div`
   display: grid;
   gap: 1rem;
-  padding: 1rem;
 
   grid-template-columns: 1fr;
 
@@ -30,6 +30,7 @@ export default function HomePage() {
   return (
     <div>
       <h1>All products</h1>
+      <SearchBar products={products} />
       <Grid>
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
