@@ -26,7 +26,6 @@ export default function HomePage() {
       setProducts(data);
     });
   }, []);
-  console.log(products);
   return (
     <div>
       <h1>All products</h1>
