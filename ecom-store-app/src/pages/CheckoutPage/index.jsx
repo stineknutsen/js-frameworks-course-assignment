@@ -1,5 +1,6 @@
 import { useCart } from "../../context/CartContext";
 import CartItem from "../../components/CartItem";
+import { Link } from "react-router-dom";
 
 export default function CartPage() {
   const { cart } = useCart();
@@ -17,7 +18,7 @@ export default function CartPage() {
             <CartItem key={item.id} product={item} />
           ))}
           <h3>Total: ${total.toFixed(2)}</h3>
-          <button>Checkout</button>
+          <Link to="/checkout/success">Checkout</Link>
         </>
       )}
     </div>
