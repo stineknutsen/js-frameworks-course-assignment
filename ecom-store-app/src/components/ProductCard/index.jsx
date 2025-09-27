@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Card = styled.div`
+  position: relative;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 1rem;
@@ -33,6 +34,22 @@ const Card = styled.div`
   }
 `;
 
+const DiscountSticker = styled.div`
+  background: maroon;
+  font-weight: bold;
+  width: 40px;
+  height: 40px;
+  font-size: 0.8rem;
+  border-radius: 50%;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+`;
+
 const ImageWrapper = styled.div`
   width: 100%;
   height: 200px; /* fixed height for all product images */
@@ -58,8 +75,15 @@ const Title = styled.h3`
   margin: 0;
 `;
 
+const OriginalPrice = styled.p`
+  font-size: 0.9rem;
+  text-decoration: line-through;
+  margin: 0.25rem 0 0;
+`;
+
 const Price = styled.p`
-  font-size: 0.95rem;
+  font-weight: bold;
+  font-size: 0.9rem;
   margin: 0.25rem 0 0;
 `;
 
@@ -82,17 +106,35 @@ const Button = styled.button`
   }
 `;
 
+function getDiscountPercentage(price, discountedPrice) {
+  if (!discountedPrice || discountedPrice >= price) return 0;
+  return Math.round(((price - discountedPrice) / price) * 100);
+}
+
 export default function ProductCard({ product }) {
+  const { id, title, image, price, discountedPrice } = product;
+  const discount = getDiscountPercentage(price, discountedPrice);
   return (
     <Card>
+      {discount > 0 && <DiscountSticker>-{discount}%</DiscountSticker>}
       <ImageWrapper>
-        <ProductImage src={product.image.url} alt={product.image.alt} />
+        <ProductImage src={image.url} alt={image.alt} />
       </ImageWrapper>
       <Info>
-        <Title>{product.title}</Title>
-        <Price>${product.price}</Price>
+        <Title>{title}</Title>
+        <Price></Price>
+        <div>
+          {price !== discountedPrice ? (
+            <>
+              <OriginalPrice>${price}</OriginalPrice>
+              <Price>${discountedPrice}</Price>
+            </>
+          ) : (
+            <Price>${price}</Price>
+          )}
+        </div>
       </Info>
-      <Link to={`/product/${product.id}`}>
+      <Link to={`/product/${id}`}>
         <Button>View Product</Button>
       </Link>
     </Card>

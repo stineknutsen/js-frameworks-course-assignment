@@ -1,119 +1,104 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import styled from "styled-components";
 
-const Container = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  max-width: 600px;
+  margin: 0 auto;
   padding: 1rem;
-  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-`;
+  height: 100%;
+  margin-top: 1rem;
 
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
 
-const Input = styled.input`
-  padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-sizing: border-box;
-`;
+  input,
+  textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
 
-const Textarea = styled.textarea`
-  padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-sizing: border-box;
-`;
+  textarea {
+    resize: vertical;
+  }
 
-const Button = styled.button`
-  padding: 0.75rem;
-  background-color: #4caf50;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 0.5rem;
-  font-size: 1rem;
+  button {
+    padding: 0.5rem 1rem;
+    background: #333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
 
-  &:hover {
-    background-color: #45a049;
+  button:hover {
+    background: #555;
   }
 `;
 
+const schema = yup.object({
+  fullName: yup
+    .string()
+    .min(3, "Full name must be at least 3 characters")
+    .required("Full name is required"),
+  email: yup
+    .string()
+    .email("Must be a valid email")
+    .required("Email is required"),
+  subject: yup
+    .string()
+    .min(3, "Subject must be at least 3 characters")
+    .required("Subject is required"),
+  message: yup
+    .string()
+    .min(3, "Message must be at least 3 characters")
+    .required("Message is required"),
+});
+
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
+    resolver: yupResolver(schema),
   });
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(formData);
-    setFormData({
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    });
-  };
+  function onSubmit(data) {
+    console.log(data);
+    reset();
+  }
 
   return (
-    <Container>
+    <Wrapper>
       <h1>Contact Us</h1>
-      <p>
-        If you have any questions or need assistance, please don't hesitate to
-        contact us.
-      </p>
-      <Form onSubmit={handleSubmit}>
+      <p>Have a question? We'd love to hear from you!</p>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <label>Full Name</label>
-        <Input
-          type="text"
-          placeholder="Full name"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-        />
+        <input placeholder="Full Name" {...register("fullName")} />
+        <p>{errors.fullName?.message}</p>
         <label>Email</label>
-        <Input
-          type="email"
-          placeholder="Email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-        />
+        <input placeholder="Email" {...register("email")} />
+        <p>{errors.email?.message}</p>
         <label>Subject</label>
-        <Input
-          type="text"
-          placeholder="Subject"
-          name="subject"
-          value={formData.subject}
-          onChange={handleChange}
-        />
+        <input placeholder="Subject" {...register("subject")} />
+        <p>{errors.subject?.message}</p>
         <label>Message</label>
-        <Textarea
-          placeholder="Message"
-          name="message"
-          value={formData.message}
-          onChange={handleChange}
-        />
-        <Button type="submit">Send</Button>
-      </Form>
-    </Container>
+        <textarea placeholder="Message" {...register("message")} />
+        <p>{errors.message?.message}</p>
+        <button type="submit">Send</button>
+      </form>
+    </Wrapper>
   );
 }

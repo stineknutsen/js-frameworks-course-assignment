@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getProductById } from "../../api/getProductById.js";
 import styled from "styled-components";
 import AddToCartIcon from "../../components/AddToCartIcon/index.jsx";
+import useApi from "../../hooks/useApi";
 
 const Display = styled.div`
   padding: 1rem;
@@ -20,16 +19,23 @@ const Display = styled.div`
 `;
 export default function ProductPage() {
   const { id } = useParams();
-  const [product, setProduct] = useState({});
+  const {
+    data: product,
+    loading,
+    error,
+  } = useApi(`https://v2.api.noroff.dev/online-shop/${id}`, null);
 
-  useEffect(() => {
-    getProductById(id).then((data) => {
-      setProduct(data);
-    });
-  }, [id]);
-
-  if (!product.id) {
+  console.log(product);
+  if (loading) {
     return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p style={{ color: "red" }}>Failed to load product</p>;
+  }
+
+  if (!product) {
+    return <p>Product not found</p>;
   }
 
   return (

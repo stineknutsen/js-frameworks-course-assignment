@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useCart } from "../../context/CartContext";
+import { Link } from "react-router-dom";
 
 export default function SuccessPage() {
   const { clearCart } = useCart();
@@ -14,7 +15,7 @@ export default function SuccessPage() {
       <p>
         Thank you for your purchase. Your order has been placed successfully.
       </p>
-      <a href="/">Back to Store</a>
+      <Link to="/">Back to Store</Link>
     </div>
   );
 }

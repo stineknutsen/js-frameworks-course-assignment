@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
-import { getAllProducts } from "../../api/getAllProducts.js";
 import ProductCard from "../../components/ProductCard";
 import styled from "styled-components";
 import SearchBar from "../../components/SearchBar/index.jsx";
+import useApi from "../../hooks/useApi";
 
 const Grid = styled.div`
   display: grid;
@@ -20,12 +19,24 @@ const Grid = styled.div`
 `;
 
 export default function HomePage() {
-  const [products, setProducts] = useState([]);
-  useEffect(() => {
-    getAllProducts().then((data) => {
-      setProducts(data);
-    });
-  }, []);
+  const {
+    data: products,
+    loading,
+    error,
+  } = useApi("https://v2.api.noroff.dev/online-shop", []);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p style={{ color: "red" }}>Failed to load products</p>;
+  }
+
+  if (!products.length) {
+    return <p>No products found</p>;
+  }
+
   return (
     <div>
       <h1>All products</h1>
