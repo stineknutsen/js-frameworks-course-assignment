@@ -21,6 +21,12 @@ export function CartProvider({ children }) {
   const addToCart = (product) => {
     setCart((prev) => {
       const existingItem = prev.find((item) => item.id === product.id);
+
+      const priceToUse =
+        product.discountedPrice && product.discountedPrice < product.price
+          ? product.discountedPrice
+          : product.price;
+
       if (existingItem) {
         return prev.map((item) =>
           item.id === product.id
@@ -28,7 +34,7 @@ export function CartProvider({ children }) {
             : item
         );
       } else {
-        return [...prev, { ...product, quantity: 1 }];
+        return [...prev, { ...product, price: priceToUse, quantity: 1 }];
       }
     });
   };
@@ -39,11 +45,11 @@ export function CartProvider({ children }) {
 
   const decreaseQuantity = (id) => {
     setCart((prev) =>
-      prev.map((item) =>
-        item.id === id && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
+      prev
+        .map((item) =>
+          item.id === id ? { ...item, quantity: item.quantity - 1 } : item
+        )
+        .filter((item) => item.quantity > 0)
     );
   };
 

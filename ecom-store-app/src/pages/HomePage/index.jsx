@@ -37,6 +37,8 @@ export default function HomePage() {
     return <p>No products found</p>;
   }
 
+  console.log(products);
+
   return (
     <div>
       <h1>All products</h1>

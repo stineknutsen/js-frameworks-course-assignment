@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import DiscountSticker from "../DiscountSticker";
+import getDiscountPercentage from "../../utils/getDiscountPercentage";
+import RatingStars from "../RatingStars";
 
 const Card = styled.div`
   position: relative;
@@ -32,22 +35,6 @@ const Card = styled.div`
       font-size: 0.9rem;
     }
   }
-`;
-
-const DiscountSticker = styled.div`
-  background: maroon;
-  font-weight: bold;
-  width: 40px;
-  height: 40px;
-  font-size: 0.8rem;
-  border-radius: 50%;
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
 `;
 
 const ImageWrapper = styled.div`
@@ -106,23 +93,21 @@ const Button = styled.button`
   }
 `;
 
-function getDiscountPercentage(price, discountedPrice) {
-  if (!discountedPrice || discountedPrice >= price) return 0;
-  return Math.round(((price - discountedPrice) / price) * 100);
-}
-
 export default function ProductCard({ product }) {
-  const { id, title, image, price, discountedPrice } = product;
+  const { id, title, image, price, discountedPrice, rating, reviews } = product;
   const discount = getDiscountPercentage(price, discountedPrice);
   return (
     <Card>
-      {discount > 0 && <DiscountSticker>-{discount}%</DiscountSticker>}
+      <DiscountSticker discount={discount} />
       <ImageWrapper>
         <ProductImage src={image.url} alt={image.alt} />
       </ImageWrapper>
       <Info>
         <Title>{title}</Title>
-        <Price></Price>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <RatingStars rating={rating} />
+          <p>({reviews.length})</p>
+        </div>
         <div>
           {price !== discountedPrice ? (
             <>
