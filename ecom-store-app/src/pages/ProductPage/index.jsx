@@ -9,6 +9,10 @@ import RatingStars from "../../components/RatingStars/index.jsx";
 const Display = styled.div`
   position: relative;
   padding: 1rem;
+  background: #fff;
+  height: 100%;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   img {
     max-width: 300px;
     height: auto;
@@ -73,17 +77,24 @@ export default function ProductPage() {
 
       <div>
         <h2>{title}</h2>
-        <p>{description}</p>
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginTop: "-2rem",
+          }}
+        >
           <RatingStars rating={rating} /> <p>({reviews.length})</p>
         </div>
+        <p>{description}</p>
         <div style={{ display: "flex", gap: "0.5rem" }}>
           {tags.map((tag) => (
             <div
               style={{
-                backgroundColor: "#f5f5f5",
+                backgroundColor: "#f0e6e6",
                 padding: "0.5rem",
                 borderRadius: "4px",
+                border: "2px solid #ddd",
               }}
               key={tag}
             >
@@ -91,7 +102,7 @@ export default function ProductPage() {
             </div>
           ))}
         </div>
-        <div>
+        <div style={{ marginTop: "1rem" }}>
           {price !== discountedPrice ? (
             <>
               <OriginalPrice>${price}</OriginalPrice>
@@ -100,25 +111,29 @@ export default function ProductPage() {
           ) : (
             <Price>${price}</Price>
           )}
-        </div>{" "}
+        </div>
         <AddToCartIcon product={product} />
         <h3>Reviews</h3>
-        {reviews.map((review) => (
-          <div
-            style={{
-              backgroundColor: "#f5f5f5",
-              padding: "1rem",
-              marginBottom: "1rem",
-              borderRadius: "8px",
-              boxShadow: "0 2px 8px rgba(0, 0, 0, 0.15)",
-            }}
-            key={review.id}
-          >
-            <h4>{review.username}</h4>
-            <RatingStars rating={review.rating} />
-            <p>{review.description}</p>
-          </div>
-        ))}
+        {reviews && reviews.length > 0 ? (
+          reviews.map((review) => (
+            <div
+              style={{
+                backgroundColor: "#f0e6e6",
+                padding: "1rem",
+                marginBottom: "1rem",
+                borderRadius: "8px",
+                border: "2px solid #ddd",
+              }}
+              key={review.id}
+            >
+              <h4>{review.username}</h4>
+              <RatingStars rating={review.rating} />
+              <p>{review.description}</p>
+            </div>
+          ))
+        ) : (
+          <p>No reviews yet.</p>
+        )}
       </div>
     </Display>
   );

@@ -4,13 +4,12 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const HeaderDiv = styled.div`
-  background-color: #fff;
   display: flex;
+  padding: 12px 10px;
   align-items: center;
   justify-content: space-between;
-  font-size: 1.2rem;
   color: black;
-  padding: 12px 10px;
+  background-color: #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   position: sticky;
   top: 0;
@@ -18,7 +17,11 @@ const HeaderDiv = styled.div`
 `;
 
 const Logo = styled.img`
-  height: 30px;
+  height: 22px;
+
+  @media (min-width: 500px) {
+    height: 28px;
+  }
 `;
 
 const Nav = styled.div`
@@ -27,10 +30,19 @@ const Nav = styled.div`
   justify-content: center;
   align-items: center;
   text-decoration: none;
+  font-size: 1rem;
+
+  @media (min-width: 500px) {
+    font-size: 1.2rem;
+  }
 
   a {
     text-decoration: none;
     color: black;
+  }
+
+  a:hover {
+    text-decoration: underline;
   }
 `;
 

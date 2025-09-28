@@ -18,7 +18,18 @@ export default function CartPage() {
             <CartItem key={item.id} product={item} />
           ))}
           <h3>Total: ${total.toFixed(2)}</h3>
-          <Link to="/checkout/success">Checkout</Link>
+          <Link
+            to="/checkout/success"
+            style={{
+              backgroundColor: "#007bff",
+              color: "#fff",
+              padding: " 0.5rem 1rem",
+              borderRadius: "5px",
+              textDecoration: "none",
+            }}
+          >
+            Checkout
+          </Link>
         </>
       )}
     </div>

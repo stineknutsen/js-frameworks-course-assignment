@@ -3,10 +3,11 @@ import { useCart } from "../../context/CartContext";
 
 const ItemWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
   border-bottom: 1px solid #ddd;
   padding: 0.75rem 0;
+  align-items: center;
 
   img {
     max-width: 100px;
@@ -14,6 +15,18 @@ const ItemWrapper = styled.div`
     border-radius: 4px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   }
+
+  @media (min-width: 600px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+`;
+
+const DetailsWrapper = styled.div`
+  display: flex;
+  gap: 1rem;
+  width: 100%;
 `;
 
 const Controls = styled.div`
@@ -27,12 +40,14 @@ export default function CartItem({ product }) {
 
   return (
     <ItemWrapper>
-      <img src={product.image.url} alt={product.image.alt} />
-      <div>
-        <h4>{product.title}</h4>
-        <p>${product.price}</p>
-        <p>Quantity: {product.quantity}</p>
-      </div>
+      <DetailsWrapper>
+        <img src={product.image.url} alt={product.image.alt} />
+        <div>
+          <h4>{product.title}</h4>
+          <p>${product.price}</p>
+          <p>Quantity: {product.quantity}</p>
+        </div>
+      </DetailsWrapper>
 
       <Controls>
         <button onClick={() => decreaseQuantity(product.id)}>-</button>

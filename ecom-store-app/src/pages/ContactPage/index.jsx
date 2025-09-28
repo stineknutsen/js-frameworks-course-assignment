@@ -6,6 +6,7 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  background: #fff;
   max-width: 600px;
   margin: 0 auto;
   padding: 1rem;
@@ -23,7 +24,7 @@ const Wrapper = styled.div`
   textarea {
     width: 100%;
     padding: 0.5rem;
-    border: 1px solid #ddd;
+    border: 2px solid #ddd;
     border-radius: 4px;
     box-sizing: border-box;
   }
@@ -39,6 +40,7 @@ const Wrapper = styled.div`
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    width: 100%;
   }
 
   button:hover {
