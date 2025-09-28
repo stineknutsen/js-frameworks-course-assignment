@@ -8,7 +8,7 @@ const HeaderDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: calc(10px + 2vmin);
+  font-size: 1.2rem;
   color: black;
   padding: 12px 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);

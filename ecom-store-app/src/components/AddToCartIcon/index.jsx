@@ -14,8 +14,13 @@ export default function AddToCartIcon({ product }) {
   };
 
   return added ? (
-    <FaCheck size={24} color="green" />
+    <FaCheck data-testid="check-icon" size={24} color="green" />
   ) : (
-    <FaCartPlus onClick={handleClick} size={24} style={{ cursor: "pointer" }} />
+    <FaCartPlus
+      data-testid="cart-icon"
+      onClick={handleClick}
+      size={24}
+      style={{ cursor: "pointer" }}
+    />
   );
 }
